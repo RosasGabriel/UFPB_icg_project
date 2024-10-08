@@ -1,13 +1,14 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
+
 #include "Player.hpp"
 #include "Map.hpp"
 
 #define WIDTH 1024
 #define HEIGHT 724
 
-// Definir o mapa (mesma matriz do exemplo anterior)
+// Definir o mapa
 int map_data[] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -20,7 +21,7 @@ int map_data[] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 };
 
-Player player(300, 300);
+Player player(300, 300, 0, 0, 0);
 Map map(13, 9, 72, map_data);
 
 void display() {
