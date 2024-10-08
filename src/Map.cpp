@@ -4,7 +4,7 @@
 Map::Map(int mapWidth, int mapHeight, int tileSize, int* mapData)
     : width(mapWidth), height(mapHeight), tileSize(tileSize), data(mapData) {}
 
-// Função para desenhar o mapa
+// Método para desenhar o mapa
 void Map::draw() const {
     int x_0, y_0;
 
@@ -25,4 +25,9 @@ void Map::draw() const {
             glEnd();
         }
     }
+}
+
+// Método para verificar se uma célula é uma parede
+bool Map::isWall(int x, int y) const{
+    return (x >= 0 && x < width && y >= 0 && y < height) ? data[y * width + x] == 1 : false;
 }

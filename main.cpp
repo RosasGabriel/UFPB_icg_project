@@ -8,7 +8,7 @@
 #define WIDTH 1024
 #define HEIGHT 724
 
-// Definir o mapa
+// Definição do formato mapa
 int map_data[] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -21,7 +21,7 @@ int map_data[] = {
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 };
 
-Player player(300, 300, 0, 0, 0);
+Player player(111, 555, 0, 0, 0);
 Map map(13, 9, 72, map_data);
 
 void display() {
@@ -32,7 +32,7 @@ void display() {
 }
 
 void movement(unsigned char key, int x, int y) {
-    player.move(key);
+    player.move(key, map);
     glutPostRedisplay();
 }
 
