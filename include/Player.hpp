@@ -19,6 +19,7 @@ public:
 
     void move(char direction, const Map& map);
     void draw() const;
+    void drawRays(const Map& map);
 
 private:
     bool isValidPosition(float new_x, float new_y, const Map& map) const;
