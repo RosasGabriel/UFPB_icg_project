@@ -10,10 +10,10 @@ void Map::draw() const {
 
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            if (data[y * width + x] == 1) {
-                glColor3f(1, 1, 1);
+            if (data[y * width + x] == 1) { // Verifica se a célula for uma parede
+                glColor3f(1, 1, 1);         // Cor branca para as paredes
             } else {
-                glColor3f(0, 0, 0);
+                glColor3f(0, 0, 0);         // Cor preta para os espaços vazios
             }
             x_0 = x * tileSize;
             y_0 = y * tileSize;
