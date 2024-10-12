@@ -68,118 +68,118 @@ float distance (float ax, float ay, float bx, float by, float ang) {
 
 // Método para desenhar o Ray Casting
 void Player::drawRays(const Map& map) {
-    int r, mx, my, mp, dof;
-    float rx, ry, ra, xo, yo;
-    int rays_number = 60;           // Número de linhas para serem desenhadas
+    int ray_index, map_tile_x, map_tile_y, map_index, depth_of_field;
+    float ray_x, ray_y, ray_angle, x_offset, y_offset;
+    int rays_number = 60;                   // Número de linhas para serem desenhadas
 
-    ra = player_angle - DR * 30;    // Ângulo inicial para desenhar as linhas de Ray Casting (30 graus a esquerda do jogador)
-    if (ra < 0) {
-        ra += 2 * PI;
+    ray_angle = player_angle - DR * 30;     // Ângulo inicial para desenhar as linhas de Ray Casting (30 graus a esquerda do jogador)
+    if (ray_angle < 0) {
+        ray_angle += 2 * PI;
     }
-    if (ra > 2 * PI) {
-        ra -= 2 * PI;
+    if (ray_angle > 2 * PI) {
+        ray_angle -= 2 * PI;
     }
 
     // Para cada raio, calcula interseções horizontais e verticais com as paredes
-    for (r=0; r < rays_number; r++) {
+    for (ray_index=0; ray_index < rays_number; ray_index++) {
         // Checagem de linhas horizontais
-        dof = 0;
-        float disH = 1000000;
-        float hx = player_x; 
-        float hy = player_y;
+        depth_of_field = 0;
+        float horizontal_distance = 1000000;
+        float horizontal_intersection_x = player_x; 
+        float horizontal_intersection_y = player_y;
 
-        float aTan=-1/tan(ra);      // Tangente inversa (para calcular as interseções horizontais)
+        float inv_tan = -1/tan(ray_angle);          // Tangente inversa (para calcular as interseções horizontais)
 
-        if (ra > PI) {              // Ray está olhando para cima
-            ry = (((int) player_y / map.tileSize) * map.tileSize)-0.0001;
-            rx = (player_y - ry) * aTan + player_x;
-            yo = -map.tileSize;
-            xo = -yo * aTan;
+        if (ray_angle > PI) {                       // Ray está olhando para cima
+            ray_y = (((int) player_y / map.tileSize) * map.tileSize)-0.0001;
+            ray_x = (player_y - ray_y) * inv_tan + player_x;
+            y_offset = -map.tileSize;
+            x_offset = -y_offset * inv_tan;
         }
 
-        if (ra < PI) {              // Ray está olhando para baixo
-            ry = (((int) player_y / map.tileSize) * map.tileSize) + map.tileSize;
-            rx = (player_y - ry) * aTan + player_x;
-            yo = map.tileSize;
-            xo = -yo * aTan;
+        if (ray_angle < PI) {                       // Ray está olhando para baixo
+            ray_y = (((int) player_y / map.tileSize) * map.tileSize) + map.tileSize;
+            ray_x = (player_y - ray_y) * inv_tan + player_x;
+            y_offset = map.tileSize;
+            x_offset = -y_offset * inv_tan;
         }
 
-        if (ra == 0 || ra == PI) {  // Ray está olhando diretamente para a esquerda ou direita
-            ry = player_y;
-            rx = player_x;
-            dof = DOF_VALUE;
+        if (ray_angle == 0 || ray_angle == PI) {    // Ray está olhando diretamente para a esquerda ou direita
+            ray_y = player_y;
+            ray_x = player_x;
+            depth_of_field = DOF_VALUE;
         }
 
         // Loop que encontra interseções horizontais com as paredes do mapa
-        while (dof < DOF_VALUE) {
-            mx = (int) (rx) / map.tileSize;
-            my = (int) (ry) / map.tileSize;
-            mp = my * map.width + mx;                                           // Posição do mapa
+        while (depth_of_field < DOF_VALUE) {
+            map_tile_x = (int) (ray_x) / map.tileSize;
+            map_tile_y = (int) (ray_y) / map.tileSize;
+            map_index = map_tile_y * map.width + map_tile_x;                                                                            // Posição do mapa
 
-            if (mp > 0 && mp < map.width * map.height && map.data[mp] == 1) {   // Colisão com parede
-                hx = rx;
-                hy = ry;
-                disH = distance(player_x, player_y, hx, hy, ra);                // Calcula distância
-                dof = DOF_VALUE;                                                // Encerra a busca
+            if (map_index > 0 && map_index < map.width * map.height && map.data[map_index] == 1) {                                      // Colisão com parede
+                horizontal_intersection_x = ray_x;
+                horizontal_intersection_y = ray_y;
+                horizontal_distance = distance(player_x, player_y, horizontal_intersection_x, horizontal_intersection_y, ray_angle);    // Calcula distância
+                depth_of_field = DOF_VALUE;                                                                                             // Encerra a busca
             } else {
-                rx += xo;
-                ry += yo;
-                dof += 1;
+                ray_x += x_offset;
+                ray_y += y_offset;
+                depth_of_field += 1;
             }
         }
         
         // Checagem de linhas verticais
-        dof = 0;
-        float disV = 1000000;
-        float vx = player_x; 
-        float vy = player_y;
+        depth_of_field = 0;
+        float vertical_distance = 1000000;
+        float vertical_intersection_x = player_x; 
+        float vertical_intersection_y = player_y;
 
-        float nTan=-tan(ra);        // Tangente inversa para interseções verticais
+        float neg_tan = -tan(ray_angle);          // Tangente inversa para interseções verticais
 
-        if (ra > P2 && ra < P3) {   // Ray está olhando para a esquerda
-            rx = (((int) player_x / map.tileSize) * map.tileSize)-0.0001;
-            ry = (player_x - rx) * nTan + player_y;
-            xo = -map.tileSize;
-            yo = -xo * nTan;
+        if (ray_angle > P2 && ray_angle < P3) {   // Ray está olhando para a esquerda
+            ray_x = (((int) player_x / map.tileSize) * map.tileSize)-0.0001;
+            ray_y = (player_x - ray_x) * neg_tan + player_y;
+            x_offset = -map.tileSize;
+            y_offset = -x_offset * neg_tan;
         }
 
-        if (ra < P2 || ra > P3) {   // Ray está olhando para a direita
-            rx = (((int) player_x / map.tileSize) * map.tileSize) + map.tileSize;
-            ry = (player_x - rx) * nTan + player_y;
-            xo = map.tileSize;
-            yo = -xo * nTan;
+        if (ray_angle < P2 || ray_angle > P3) {   // Ray está olhando para a direita
+            ray_x = (((int) player_x / map.tileSize) * map.tileSize) + map.tileSize;
+            ray_y = (player_x - ray_x) * neg_tan + player_y;
+            x_offset = map.tileSize;
+            y_offset = -x_offset * neg_tan;
         }
 
-        if (ra == 0 || ra == PI) {
-            ry = player_y;
-            rx = player_x;
-            dof = DOF_VALUE;
+        if (ray_angle == 0 || ray_angle == PI) {
+            ray_y = player_y;
+            ray_x = player_x;
+            depth_of_field = DOF_VALUE;
         }
 
-        while (dof < DOF_VALUE) {
-            mx = (int) (rx) / map.tileSize;
-            my = (int) (ry) / map.tileSize;
-            mp = my * map.width + mx;
-            if (mp > 0 && mp < map.width * map.height && map.data[mp] == 1) {
-                vx = rx;
-                vy = ry;
-                disV = distance(player_x, player_y, vx, vy, ra);
-                dof = DOF_VALUE;
+        while (depth_of_field < DOF_VALUE) {
+            map_tile_x = (int) (ray_x) / map.tileSize;
+            map_tile_y = (int) (ray_y) / map.tileSize;
+            map_index = map_tile_y * map.width + map_tile_x;
+            if (map_index > 0 && map_index < map.width * map.height && map.data[map_index] == 1) {
+                vertical_intersection_x = ray_x;
+                vertical_intersection_y = ray_y;
+                vertical_distance = distance(player_x, player_y, vertical_intersection_x, vertical_intersection_y, ray_angle);
+                depth_of_field = DOF_VALUE;
             } else {
-                rx += xo;
-                ry += yo;
-                dof += 1;
+                ray_x += x_offset;
+                ray_y += y_offset;
+                depth_of_field += 1;
             }
         }
         
         // Determina qual interseção (horizontal ou vertical) está mais próxima
-        if (disV<disH) {
-            rx = vx;
-            ry = vy;
+        if (vertical_distance<horizontal_distance) {
+            ray_x = vertical_intersection_x;
+            ray_y = vertical_intersection_y;
         }
-        if (disH < disV) {
-            rx = hx;
-            ry = hy;
+        if (horizontal_distance < vertical_distance) {
+            ray_x = horizontal_intersection_x;
+            ray_y = horizontal_intersection_y;
         }
 
         // Desenha o raio na tela (da posição do jogador até a interseção)
@@ -187,16 +187,16 @@ void Player::drawRays(const Map& map) {
         glLineWidth(1);
         glBegin(GL_LINES);
         glVertex2i(player_x, player_y); // Ponto inicial do raio (posição do jogador)
-        glVertex2i(rx, ry);             // Ponto final do raio (onde ele colide com uma parede)
+        glVertex2i(ray_x, ray_y);             // Ponto final do raio (onde ele colide com uma parede)
         glEnd();
 
-        ra += DR;                       // Incrementa o ângulo do próximo raio
+        ray_angle += DR;                       // Incrementa o ângulo do próximo raio
 
-        if (ra < 0) {
-            ra += 2 * PI;
+        if (ray_angle < 0) {
+            ray_angle += 2 * PI;
         }
-        if (ra > 2 * PI) {
-            ra -= 2 * PI;
+        if (ray_angle > 2 * PI) {
+            ray_angle -= 2 * PI;
         }
     }
 }
