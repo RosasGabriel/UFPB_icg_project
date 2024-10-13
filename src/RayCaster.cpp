@@ -66,6 +66,24 @@ void RayCaster::castRays(float player_x, float player_y, float player_angle, con
         glVertex2i(ray_index * 7 + 1024, lineH + lineO);
         glEnd();
 
+        // Desenhar o teto
+        glColor3f(0.5, 0.7, 0.9);  // Cor azul claro para o teto
+        glBegin(GL_QUADS);
+        glVertex2i(ray_index * 7 + 1024, 0);  // Canto superior esquerdo do teto
+        glVertex2i(ray_index * 7 + 1024, lineO);  // Limite inferior do teto (parte superior da parede)
+        glVertex2i((ray_index + 1) * 7 + 1024, lineO);
+        glVertex2i((ray_index + 1) * 7 + 1024, 0);
+        glEnd();
+
+        // Desenhar o piso
+        glColor3f(0.3, 0.2, 0.1);  // Cor marrom para o piso
+        glBegin(GL_QUADS);
+        glVertex2i(ray_index * 7 + 1024, lineO + lineH);  // Limite superior do piso (parte inferior da parede)
+        glVertex2i(ray_index * 7 + 1024, 320);  // Canto inferior esquerdo do piso
+        glVertex2i((ray_index + 1) * 7 + 1024, 320);  // Canto inferior direito do piso
+        glVertex2i((ray_index + 1) * 7 + 1024, lineO + lineH);
+        glEnd();
+
         // Ajustar o próximo ângulo
         ray_angle += ray_angle_step;
         if (ray_angle < 0) {
@@ -77,7 +95,7 @@ void RayCaster::castRays(float player_x, float player_y, float player_angle, con
     }
 }
 
-// Cálculo da interseção horizontal
+// Método para o cálculo da interseção horizontal
 float RayCaster::calculateHorizontalIntersection(float ray_angle, float player_x, float player_y, const Map& map, float& ray_x, float& ray_y) const {
     float inv_tan = -1 / tan(ray_angle);  // Tangente inversa
     float horizontal_distance = MAX_DEPTH;
@@ -119,7 +137,7 @@ float RayCaster::calculateHorizontalIntersection(float ray_angle, float player_x
     return horizontal_distance;
 }
 
-// Cálculo da interseção vertical
+// Método para o cálculo da interseção vertical
 float RayCaster::calculateVerticalIntersection(float ray_angle, float player_x, float player_y, const Map& map, float& ray_x, float& ray_y) const {
     float neg_tan = -tan(ray_angle);  // Tangente negativa
     float vertical_distance = MAX_DEPTH;
@@ -161,7 +179,7 @@ float RayCaster::calculateVerticalIntersection(float ray_angle, float player_x, 
     return vertical_distance;
 }
 
-// Função auxiliar para calcular distância
+// Método auxiliar para calcular distância
 float RayCaster::distance(float ax, float ay, float bx, float by) const {
     return sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay));
 }
