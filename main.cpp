@@ -5,7 +5,7 @@
 #include "Player.hpp"
 #include "Map.hpp"
 
-#define WIDTH 1024
+#define WIDTH 1920
 #define HEIGHT 724
 
 // Definição do formato do mapa. Cada valor '1' representa uma parede, e '0' um espaço vazio.
@@ -24,6 +24,7 @@ int map_data[] = {
 // Inicialização do jogador e do mapa
 Player player(111, 555, 0, 0, 0);
 Map map(13, 9, 72, map_data);
+// RayCaster ray_caster;
 
 // Função responsável para o desenho da cena (mapa, player e raios lançados)
 void display() {

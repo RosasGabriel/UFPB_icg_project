@@ -11,7 +11,7 @@ public:
     // Atributos
     int width;
     int height;
-    int tileSize;
+    int tile_size;
     int* data;
 
     // Contrutor

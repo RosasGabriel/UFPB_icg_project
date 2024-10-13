@@ -2,7 +2,7 @@
 
 // Construtor do mapa
 Map::Map(int mapWidth, int mapHeight, int tileSize, int* mapData)
-    : width(mapWidth), height(mapHeight), tileSize(tileSize), data(mapData) {}
+    : width(mapWidth), height(mapHeight), tile_size(tileSize), data(mapData) {}
 
 // Método para desenhar o mapa
 void Map::draw() const {
@@ -15,13 +15,13 @@ void Map::draw() const {
             } else {
                 glColor3f(0, 0, 0);         // Cor preta para os espaços vazios
             }
-            x_0 = x * tileSize;
-            y_0 = y * tileSize;
+            x_0 = x * tile_size;
+            y_0 = y * tile_size;
             glBegin(GL_QUADS);
             glVertex2i(x_0 + 1, y_0 + 1);
-            glVertex2i(x_0 + 1, y_0 + tileSize - 1);
-            glVertex2i(x_0 + tileSize - 1, y_0 + tileSize - 1);
-            glVertex2i(x_0 + tileSize - 1, y_0 + 1);
+            glVertex2i(x_0 + 1, y_0 + tile_size - 1);
+            glVertex2i(x_0 + tile_size - 1, y_0 + tile_size - 1);
+            glVertex2i(x_0 + tile_size - 1, y_0 + 1);
             glEnd();
         }
     }
