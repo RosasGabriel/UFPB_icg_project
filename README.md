@@ -10,7 +10,7 @@ O código implementa uma aplicação gráfica que utiliza técnicas de Ray Casti
 
 ## Imagem do programa
 
-![Imagem do Programa](path/to/your/image.png)  <!-- Altere o caminho para a imagem do seu programa -->
+![Imagem do Programa](images/image.png)  <!-- Altere o caminho para a imagem do seu programa -->
 
 ## Estrutura do Projeto
 
