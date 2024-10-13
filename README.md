@@ -14,8 +14,20 @@ O código implementa uma aplicação gráfica que utiliza técnicas de Ray Casti
 
 ## Estrutura do Projeto
 
-root |- Makefile |- include |- (arquivos.hpp) |- src |- (arquivos.cpp)
+->Images:
+  Diretório para armazenar a imagem de exemplificação do projeto funcionando
 
+->Include:
+  Diretório para armazenar as bibliotecas para as classes implementadas para o projeto sendo elas:
+    - Map.hpp
+    - Player.hpp
+    - RayCaster.hpp
+
+->Src:
+  Diretório para armazenar as implementações do métodos das classes usadas no projeto sendo elas:
+    - Map.cpp
+    - Player.cpp
+    - RayCaster.cpp
 
 ## Requisitos
 
