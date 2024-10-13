@@ -4,6 +4,7 @@
 
 #include "Player.hpp"
 #include "Map.hpp"
+#include "RayCaster.hpp"
 
 #define WIDTH 1920
 #define HEIGHT 724
@@ -24,14 +25,14 @@ int map_data[] = {
 // Inicialização do jogador e do mapa
 Player player(111, 555, 0, 0, 0);
 Map map(13, 9, 72, map_data);
-// RayCaster ray_caster;
+RayCaster ray_caster;
 
 // Função responsável para o desenho da cena (mapa, player e raios lançados)
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     map.draw();
     player.draw();
-    player.drawRays(map);
+    player.drawRays(map, ray_caster);
     glutSwapBuffers();
 }
 

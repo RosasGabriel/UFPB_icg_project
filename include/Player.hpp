@@ -8,6 +8,7 @@
 #include <math.h>
 
 #include "Map.hpp"
+#include "RayCaster.hpp"
 
 // Classe Player para representar o jogador com seus métodos e atributos
 class Player {
@@ -23,7 +24,8 @@ public:
     // Métodos públicos
     void move(char direction, const Map& map);
     void draw() const;
-    void drawRays(const Map& map);
+    // void drawRays(const Map& map);
+    void drawRays(const Map& map, const RayCaster& ray_caster);
 
 private:
     // Métodos privados
