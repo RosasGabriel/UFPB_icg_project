@@ -6,7 +6,7 @@ Este é um projeto de introdução à computação gráfica, onde implementamos 
 
 ## O que o código faz
 
-O código implementa uma aplicação gráfica que utiliza técnicas de Ray Casting para simular a visualização de um ambiente 2D em uma representação 3D. A aplicação permite que o usuário se mova pelo ambiente e visualize as interseções de raios com paredes, teto e piso, criando uma representação realista de um espaço tridimensional.
+O código implementa uma aplicação gráfica que utiliza técnicas de Ray Casting para simular a visualização de um ambiente 2D em uma representação 3D. A aplicação permite que o usuário se mova pelo ambiente e visualize as interseções de raios com paredes, teto e piso, criando uma representação simplificada de um espaço tridimensional.
 
 ## Imagem do programa
 
